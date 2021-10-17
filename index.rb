@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 module Info1
   def get_place(place)
     fol = Dir.glob('*')
-    su_fold = fol.select { |i| i.include? (place[0].upcase) }
+    su_fold = fol.select { |i| i.include?(place[0].upcase) }
     su_fold[0]
   end
 
@@ -58,10 +59,10 @@ module Info1
     search_f.each do |i|
       arrday << i.split(',')[0]
       arrhtem << if i.split(',')[3] == ''
-                  1000.to_i
-                else
-                  i.split(',')[3].to_i
-                end
+                   1000.to_i
+                 else
+                   i.split(',')[3].to_i
+                 end
     end
     ind = arrhtem.index(arrhtem.min)
     month_num = arrday[ind].split('-')[1].to_i
@@ -82,7 +83,8 @@ module Info1
     puts "Humid: #{arrhtem.max}% on #{months_hash[month_num]} #{date}"
   end
 end
-#class for first problem
+
+# class for first problem
 class First_Report
   include Info1
   def info(place, year)
@@ -96,8 +98,6 @@ class First_Report
     result_most_humidity(search_f, months_hash)
   end
 end
-
-
 
 module Info2
   def get_place(place)
@@ -115,17 +115,17 @@ module Info2
   end
 
   def get_year_files(str, arr, year, month_inp)
-    fil = arr.select { |i| i.include? (year.to_s)}
+    fil = arr.select { |i| i.include?(year.to_s) }
     arrpaths = []
     fil.each do |i|
       fpath = "#{str}/#{i}"
       arrpaths << fpath
     end
     monthdup = month_inp.dup
-    monthdup  << ('.txt')
-    mon_list = arrpaths.select { |i| i.split('_').include?(monthdup) }
-    return mon_list
+    monthdup << ('.txt')
+    arrpaths.select { |i| i.split('_').include?(monthdup) }
   end
+
   def searching_through_files(arrp)
     res = []
     arrp.each do |i|
@@ -141,7 +141,7 @@ module Info2
     search_f.each do |i|
       arrhtem << i.split(',')[1].to_i
     end
-    avg_high_temp=arrhtem.inject{ |sum, el| sum + el }.to_f / arrhtem.size
+    avg_high_temp = arrhtem.inject { |sum, el| sum + el }.to_f / arrhtem.size
     puts "Heighest Average: #{avg_high_temp.round}C"
   end
 
@@ -154,7 +154,7 @@ module Info2
                    i.split(',')[3].to_i
                  end
     end
-    avg_low_temp=arrhtem.inject{ |sum, el| sum + el }.to_f / arrhtem.size
+    avg_low_temp = arrhtem.inject { |sum, el| sum + el }.to_f / arrhtem.size
     puts "Lowest Average: #{avg_low_temp.round}C"
   end
 
@@ -163,7 +163,7 @@ module Info2
     search_f.each do |i|
       arrhtem << i.split(',')[7].to_i
     end
-    avg_humidity=arrhtem.inject{ |sum, el| sum + el }.to_f / arrhtem.size
+    avg_humidity = arrhtem.inject { |sum, el| sum + el }.to_f / arrhtem.size
     puts "Average Humidity: #{avg_humidity.round}%"
   end
 end
@@ -199,17 +199,17 @@ module Info3
   end
 
   def get_year_files(str, arr, year, month_inp)
-    fil = arr.select { |i| i.include? (year.to_s)}
+    fil = arr.select { |i| i.include?(year.to_s) }
     arrpaths = []
     fil.each do |i|
       fpath = "#{str}/#{i}"
       arrpaths << fpath
     end
     monthdup = month_inp.dup
-    monthdup  << ('.txt')
-    mon_list = arrpaths.select { |i| i.split('_').include?(monthdup) }
-    return mon_list
+    monthdup << ('.txt')
+    arrpaths.select { |i| i.split('_').include?(monthdup) }
   end
+
   def searching_through_files(arrp)
     res = []
     arrp.each do |i|
@@ -240,14 +240,13 @@ module Info3
     # puts "Lowest Average: #{avg_low_temp.round}C"
   end
 
-
-  def result_p3(high,low)
+  def result_p3(high, low)
     arr_ind = []
     arr = []
-    ((1..31).each{|n| arr_ind<<n})
-    for i in 0..30 do
-      puts " #{arr_ind[i]}"+" #{'+'*high[i].to_i} ".red + "#{high[i].to_i}C "
-      puts " #{arr_ind[i]}"+" #{'+'*low[i].to_i} ".blue + "#{low[i].to_i}C "
+    ((1..31).each { |n| arr_ind << n })
+    (0..30).each do |i|
+      puts " #{arr_ind[i]}" + " #{'+' * high[i].to_i} ".red + "#{high[i].to_i}C "
+      puts " #{arr_ind[i]}" + " #{'+' * low[i].to_i} ".blue + "#{low[i].to_i}C "
     end
   end
 end
@@ -260,9 +259,9 @@ class Third_Report
     arr =  get_files(str)
     arrp = get_year_files(str, arr, year, month_inp)
     search_f = searching_through_files(arrp)
-    high=result_high_temp(search_f)
-    low=result_low_temp(search_f)
-    result_p3(high,low)
+    high = result_high_temp(search_f)
+    low = result_low_temp(search_f)
+    result_p3(high, low)
   end
 end
 First_Report.new.info('dubai', 2006)
