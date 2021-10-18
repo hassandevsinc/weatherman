@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# detail functionalities for problem 1
 module Info1
   def get_place(place)
     fol = Dir.glob('*')
@@ -54,8 +55,7 @@ module Info1
   end
 
   def result_low_temp(search_f, months_hash)
-    arrday = []
-    arrhtem = []
+    arrday = [], arrhtem = []
     search_f.each do |i|
       arrday << i.split(',')[0]
       arrhtem << if i.split(',')[3] == ''
@@ -64,9 +64,8 @@ module Info1
                    i.split(',')[3].to_i
                  end
     end
-    ind = arrhtem.index(arrhtem.min)
-    month_num = arrday[ind].split('-')[1].to_i
-    date = arrday[ind].split('-')[2].to_i
+    month_num = arrday[arrhtem.index(arrhtem.min)].split('-')[1].to_i
+    date = arrday[arrhtem.index(arrhtem.min)].split('-')[2].to_i
     puts "Lowest: #{arrhtem.min}C on #{months_hash[month_num]} #{date}"
   end
 
@@ -85,7 +84,7 @@ module Info1
 end
 
 # class for first problem
-class First_Report
+class FirstReport
   include Info1
   def info(place, year)
     str = get_place(place)
@@ -99,6 +98,7 @@ class First_Report
   end
 end
 
+# detail functionalities for 2nd problem
 module Info2
   def get_place(place)
     fol = Dir.glob('*')
@@ -169,7 +169,7 @@ module Info2
 end
 
 # class for Third problem
-class Second_Report
+class SecondReport
   include Info2
   def info(place, year, month_inp)
     str = get_place(place)
@@ -183,6 +183,8 @@ class Second_Report
 end
 
 require 'colorize'
+
+# detail functionalities for 3rd problem
 module Info3
   def get_place(place)
     fol = Dir.glob('*')
@@ -242,7 +244,6 @@ module Info3
 
   def result_p3(high, low)
     arr_ind = []
-    arr = []
     ((1..31).each { |n| arr_ind << n })
     (0..30).each do |i|
       puts " #{arr_ind[i]}" + " #{'+' * high[i].to_i} ".red + "#{high[i].to_i}C "
@@ -252,7 +253,7 @@ module Info3
 end
 
 # class for Third problem
-class Third_Report
+class ThirdReport
   include Info3
   def info(place, year, month_inp)
     str = get_place(place)
@@ -264,6 +265,15 @@ class Third_Report
     result_p3(high, low)
   end
 end
-First_Report.new.info('dubai', 2006)
-Second_Report.new.info('Lahore', 2006, 'Aug')
-Third_Report.new.info('muree', 2004, 'Aug')
+# FirstReport.new.info('dubai', 2006)
+# SecondReport.new.info('Lahore', 2006, 'Aug')
+# ThirdReport.new.info('muree', 2004, 'Aug')
+
+case ARGV[0]
+when '-e'
+  FirstReport.new.info(ARGV[2], ARGV[1])
+when '-a'
+  SecondReport.new.info(ARGV[2], ARGV[1], ARGV[3])
+when '-c'
+  ThirdReport.new.info(ARGV[2], ARGV[1], ARGV[3])
+end
