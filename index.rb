@@ -346,7 +346,7 @@ module Info4
     arr_ind = []
     ((1..31).each { |n| arr_ind << n })
     (0..30).each do |i|
-      puts " #{arr_ind[i]}" + " #{'+' * high[i].to_i}".red+"#{'+' * low[i].to_i}".blue + " #{ high[i].to_i}C"+ "-" + "#{ low[i].to_i}C "
+      puts " #{arr_ind[i]}" +" #{'+' * low[i].to_i}".blue + "#{'+' * high[i].to_i}".red+" #{ low[i].to_i}C"+ "-" +  "#{ high[i].to_i}C" 
       # puts " #{arr_ind[i]}" + " #{'+' * low[i].to_i} ".blue + "#{low[i].to_i}C "
     end
   end
