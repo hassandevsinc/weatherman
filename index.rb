@@ -265,15 +265,152 @@ class ThirdReport
     result_p3(high, low)
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# detail functionalities for 3rd problem
+module Info4
+  def get_place(place)
+    fol = Dir.glob('*')
+    su_fold = fol.select { |i| i.include? (place[0].upcase) }
+    su_fold[0]
+  end
+
+  def get_files(str)
+    arr = []
+    Dir.foreach(str) do |files|
+      arr << files
+    end
+    arr
+  end
+
+  def get_year_files(str, arr, year, month_inp)
+    fil = arr.select { |i| i.include?(year.to_s) }
+    arrpaths = []
+    fil.each do |i|
+      fpath = "#{str}/#{i}"
+      arrpaths << fpath
+    end
+    monthdup = month_inp.dup
+    monthdup << ('.txt')
+    arrpaths.select { |i| i.split('_').include?(monthdup) }
+  end
+
+  def searching_through_files(arrp)
+    res = []
+    arrp.each do |i|
+      File.foreach(i) do |j|
+        res << j if j.split(',')[0].split('-')[0].to_i.to_s.size == 4
+      end
+    end
+    res
+  end
+
+  def result_high_temp(search_f)
+    arrhtem = []
+    search_f.each do |i|
+      arrhtem << i.split(',')[1].to_i
+    end
+    arrhtem
+    # avg_high_temp=arrhtem.inject{ |sum, el| sum + el }.to_f / arrhtem.size
+    # puts "Heighest Average: #{avg_high_temp.round}C"
+  end
+
+  def result_low_temp(search_f)
+    arrhtem = []
+    search_f.each do |i|
+      arrhtem << i.split(',')[3].to_i
+    end
+    arrhtem
+    # avg_low_temp=arrhtem.inject{ |sum, el| sum + el }.to_f / arrhtem.size
+    # puts "Lowest Average: #{avg_low_temp.round}C"
+  end
+
+  def result_p3(high, low)
+    arr_ind = []
+    ((1..31).each { |n| arr_ind << n })
+    (0..30).each do |i|
+      puts " #{arr_ind[i]}" + " #{'+' * high[i].to_i}".red+"#{'+' * low[i].to_i}".blue + " #{ high[i].to_i}C"+ "-" + "#{ low[i].to_i}C "
+      # puts " #{arr_ind[i]}" + " #{'+' * low[i].to_i} ".blue + "#{low[i].to_i}C "
+    end
+  end
+end
+
+# class for Third problem
+class BonusReport
+  include Info4
+  def info(place, year, month_inp)
+    str = get_place(place)
+    arr =  get_files(str)
+    arrp = get_year_files(str, arr, year, month_inp)
+    search_f = searching_through_files(arrp)
+    high = result_high_temp(search_f)
+    low = result_low_temp(search_f)
+    result_p3(high, low)
+  end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # FirstReport.new.info('dubai', 2006)
 # SecondReport.new.info('Lahore', 2006, 'Aug')
 # ThirdReport.new.info('muree', 2004, 'Aug')
 
+def month
+  { 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun', 7 => 'Jul',
+    8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec' }
+end
 case ARGV[0]
 when '-e'
   FirstReport.new.info(ARGV[2], ARGV[1])
 when '-a'
-  SecondReport.new.info(ARGV[2], ARGV[1], ARGV[3])
+  mont = month[ARGV[2].to_i]
+  SecondReport.new.info(ARGV[3],ARGV[1],mont)
+# when '-c'
+#   mont = month[ARGV[2].to_i]
+#   ThirdReport.new.info(ARGV[3], ARGV[1].to_i, mont)
 when '-c'
-  ThirdReport.new.info(ARGV[2], ARGV[1], ARGV[3])
+  puts "#{mont = month[ARGV[2].to_i]} #{ARGV[1]}"
+  BonusReport.new.info(ARGV[3], ARGV[1], mont)
 end
+ARGV.length
