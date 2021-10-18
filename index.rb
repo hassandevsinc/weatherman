@@ -266,29 +266,11 @@ class ThirdReport
   end
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # detail functionalities for 3rd problem
 module Info4
   def get_place(place)
     fol = Dir.glob('*')
-    su_fold = fol.select { |i| i.include? (place[0].upcase) }
+    su_fold = fol.select { |i| i.include?(place[0].upcase) }
     su_fold[0]
   end
 
@@ -346,7 +328,7 @@ module Info4
     arr_ind = []
     ((1..31).each { |n| arr_ind << n })
     (0..30).each do |i|
-      puts " #{arr_ind[i]}" +" #{'+' * low[i].to_i}".blue + "#{'+' * high[i].to_i}".red+" #{ low[i].to_i}C"+ "-" +  "#{ high[i].to_i}C" 
+      puts " #{arr_ind[i]} #{('+' * low[i].to_i).to_s.blue}#{('+' * high[i].to_i).to_s.red} #{low[i].to_i}C-#{high[i].to_i}C"
       # puts " #{arr_ind[i]}" + " #{'+' * low[i].to_i} ".blue + "#{low[i].to_i}C "
     end
   end
@@ -366,32 +348,6 @@ class BonusReport
   end
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # FirstReport.new.info('dubai', 2006)
 # SecondReport.new.info('Lahore', 2006, 'Aug')
 # ThirdReport.new.info('muree', 2004, 'Aug')
@@ -405,7 +361,7 @@ when '-e'
   FirstReport.new.info(ARGV[2], ARGV[1])
 when '-a'
   mont = month[ARGV[2].to_i]
-  SecondReport.new.info(ARGV[3],ARGV[1],mont)
+  SecondReport.new.info(ARGV[3], ARGV[1], mont)
 # when '-c'
 #   mont = month[ARGV[2].to_i]
 #   ThirdReport.new.info(ARGV[3], ARGV[1].to_i, mont)
