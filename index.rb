@@ -379,7 +379,7 @@ when '-a'
 #   mont = month[ARGV[2].to_i]
 #   ThirdReport.new.info(ARGV[3], ARGV[1].to_i, mont)
 when '-c'
-  puts "#{mont = month[ARGV[2].to_i]} #{ARGV[1]}"
+  mont = month[ARGV[2].to_i]
+  puts "#{mont} #{ARGV[1]}"
   BonusReport.new.info(ARGV[3], ARGV[1], mont)
 end
-ARGV.length
